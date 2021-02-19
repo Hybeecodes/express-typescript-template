@@ -1,7 +1,7 @@
 {
-  "name": "paystack-shopping-cart-application",
+  "name": "express-typescript-template",
   "version": "1.0.0",
-  "description": "Paystack Technical Assessment",
+  "description": "Boilerplate Code",
   "scripts": {
     "start": "node dist/src/server.js",
     "prestart": "npm run build",
