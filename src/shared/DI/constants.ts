@@ -1,0 +1,5 @@
+export enum Constants {
+    LOGGER = 'LOGGER',
+    CONFIG_SERVICE = 'CONFIG_SERVICE',
+    HOME_CONTROLLER = 'HOME_CONTROLLER',
+}
