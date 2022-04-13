@@ -10,11 +10,25 @@ export class TodoService {
     ) {}
 
     async getAll(): Promise<any> {
-        return await this.todoRepository.getAllTodos();
+        try {
+            return await this.todoRepository.getAllTodos();
+        } catch (e) {
+            throw new HttpException(
+                'Sorry, we could not get your todos at this time.',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
 
     async getById(id: number): Promise<any> {
-        return this.todoRepository.getTodoById(id);
+        try {
+            return await this.todoRepository.getTodoById(id);
+        } catch (e) {
+            throw new HttpException(
+                'Sorry, we could not get your todo at this time.',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
 
     async create(todo: CreateTodoDto): Promise<any> {
@@ -29,11 +43,23 @@ export class TodoService {
     }
 
     async update(id: number, todo: any): Promise<any> {
-       return await this.todoRepository.updateTodo(id, todo);
+        const todoToUpdate = await this.todoRepository.getTodoById(id);
+        if (!todoToUpdate) {
+            throw new HttpException('Todo not found', HttpStatus.NOT_FOUND);
+        }
+       try {
+           return await this.todoRepository.updateTodo(id, todo);
+       } catch (e) {
+           throw new HttpException('Sorry, something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+       }
     }
 
     async delete(id: number): Promise<any> {
-        return await this.todoRepository.deleteTodo(id);
+        try {
+            return await this.todoRepository.deleteTodo(id);
+        } catch (e) {
+            throw new HttpException('Sorry, something went wrong', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

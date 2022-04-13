@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import {TodoController} from "../controllers/todo.controller";
-import {TodoService} from "../services/todo.service";
-import {TodoRepository} from "../repositories/todo.repository";
 import {validateBody} from "../shared/middlewares/validator.middleware";
 import {CreateTodoDto} from "../dtos/create-todo.dto";
+import {serviceLocator} from "../shared/DI/service-locator";
+import {Constants} from "../shared/DI/constants";
 
-const todoController = new TodoController(new TodoService(new TodoRepository()))
+const todoController = serviceLocator.get<TodoController>(Constants.TODO_CONTROLLER);
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.get('/', todoController.getTodos);
 
 router.post('/', validateBody(CreateTodoDto), todoController.createTodo);
 
-router.put('/:id', todoController.updateTodo);
+router.put('/:id', validateBody(CreateTodoDto), todoController.updateTodo);
 
 router.delete('/:id', todoController.deleteTodo);
 

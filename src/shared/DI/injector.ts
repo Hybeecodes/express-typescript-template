@@ -6,6 +6,7 @@ import {HomeController} from "../../controllers/home.controller";
 import {IConfigService} from "../services/config/config.service.interface";
 import {TodoService} from "../../services/todo.service";
 import {TodoController} from "../../controllers/todo.controller";
+import {TodoRepository} from "../../repositories/todo.repository";
 
 /**
  * @summary This helper file uses the service locator to register dependencies
@@ -23,9 +24,13 @@ serviceLocator.register(Constants.HOME_CONTROLLER, () => {
     return new HomeController(configService);
 });
 
-// serviceLocator.register(Constants.TODO_SERVICE, () => {
-//     return new TodoService();
-// });
+serviceLocator.register(Constants.TODO_REPOSITORY, () => {
+    return new TodoRepository();
+});
+
+serviceLocator.register(Constants.TODO_SERVICE, () => {
+    return new TodoService(serviceLocator.get<TodoRepository>(Constants.TODO_REPOSITORY));
+});
 
 serviceLocator.register(Constants.TODO_CONTROLLER, () => {
     const todoService = serviceLocator.get<TodoService>(Constants.TODO_SERVICE);
