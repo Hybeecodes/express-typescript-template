@@ -1,4 +1,4 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 
 export enum TodoStatus {
     TODO = "TODO",
@@ -7,7 +7,7 @@ export enum TodoStatus {
 }
 
 @Entity('todos')
-export class Todo extends BaseEntity {
+export class Todo {
   @PrimaryGeneratedColumn()
   id: number;
 

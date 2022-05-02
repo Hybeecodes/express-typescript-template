@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./tests/jest-e2e.json",
+    "test:e2e": "jest --config tests/jest-e2e.json",
     "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -f src/typeorm/ormconfig.mysql.ts -n",
     "migration:show": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:show -f src/typeorm/ormconfig.mysql.ts",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -f src/typeorm/ormconfig.mysql.ts",
@@ -27,18 +27,22 @@
     }
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
+    "verbose": false,
+    "testEnvironment": "node",
+    "testRegex": ".*spec.ts$",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
     "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
+      "^.+\\.[jt]sx?$": "ts-jest"
     },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "setupFiles": [
+      "dotenv/config"
+    ],
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    }
   },
   "author": "Ibiniyi Obikoya",
   "dependencies": {
@@ -46,12 +50,14 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "chalk": "^4.1.0",
+    "chance": "^1.1.8",
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
     "concurrently": "^7.1.0",
     "dotenv": "^8.2.0",
     "events": "^3.2.0",
     "express": "^4.17.1",
+    "faker": "^6.6.6",
     "http-status": "^1.5.0",
     "husky": "^5.0.9",
     "inversify": "^5.0.5",

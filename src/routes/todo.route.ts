@@ -9,7 +9,6 @@ const todoController = serviceLocator.get<TodoController>(Constants.TODO_CONTROL
 
 const router = Router();
 
-/* GET home page. */
 router.get('/', todoController.getTodos);
 
 router.post('/', validateBody(CreateTodoDto), todoController.createTodo);

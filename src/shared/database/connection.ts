@@ -5,9 +5,18 @@ import connectionOptions from "../../typeorm/ormconfig.mysql";
 
 const logger: ILogger = new WinstonLogger('Database Connection');
 
-export const dbCreateConnection = async (): Promise<Connection | null> => {
+export interface LocalConnectionOptions {
+    migrate?: boolean;
+    isTest?: boolean;
+}
+
+export const dbCreateConnection = async (localConnectionOptions?: LocalConnectionOptions): Promise<Connection | null> => {
     try {
-        const conn = await createConnection(connectionOptions);
+        const overrides: any = {synchronize: localConnectionOptions && localConnectionOptions.migrate || false};
+        if (localConnectionOptions && localConnectionOptions.isTest) {
+            overrides.database = 'test';
+        }
+        const conn = await createConnection({...connectionOptions, ...overrides});
         logger.log(`Database connection success. Connection name: '${conn.name}' Database: '${conn.options.database}'`);
     } catch (err) {
         logger.error(`Database connection error: ${err}`);

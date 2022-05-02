@@ -6,7 +6,8 @@ import {HomeController} from "../../controllers/home.controller";
 import {IConfigService} from "../services/config/config.service.interface";
 import {TodoService} from "../../services/todo.service";
 import {TodoController} from "../../controllers/todo.controller";
-import {TodoRepository} from "../../repositories/todo.repository";
+import {TodoRepository} from "../../repositories/todo/todo.repository";
+import {ITodoRepository} from "../../repositories/todo/todo.repository.interface";
 
 /**
  * @summary This helper file uses the service locator to register dependencies
@@ -29,7 +30,7 @@ serviceLocator.register(Constants.TODO_REPOSITORY, () => {
 });
 
 serviceLocator.register(Constants.TODO_SERVICE, () => {
-    return new TodoService(serviceLocator.get<TodoRepository>(Constants.TODO_REPOSITORY));
+    return new TodoService(serviceLocator.get<ITodoRepository>(Constants.TODO_REPOSITORY));
 });
 
 serviceLocator.register(Constants.TODO_CONTROLLER, () => {

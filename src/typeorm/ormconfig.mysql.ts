@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import {ConnectionOptions} from "typeorm";
+import {Todo} from "../entities/todo.entity";
 
 dotenv.config();
 const config = process.env;
@@ -11,7 +12,7 @@ const connectionOptions: ConnectionOptions = {
   username: config.DB_USER,
   password: config.DB_PASS,
   database: config.DB_NAME,
-  entities: [`${__dirname}/../**/*.entity.{ts,js}`],
+  entities: [Todo],
   migrations: [`${__dirname}/../migrations/*.{ts,js}`],
   synchronize: false,
   logging: true,
